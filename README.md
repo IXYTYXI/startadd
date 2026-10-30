@@ -23,10 +23,11 @@ npm start
 ```sh
 npm test
 node --check app.mjs
+python3 -m unittest test_server.py
 ```
 
 ## 与 Awesome Deploy 的关系
 
-本项目使用用户提供的 `awesome-deploy-integration-0.11.8.zip` 中的契约核对部署边界。该 skill 为**已有可信后端**提供登录态共享、项目搜索、幂等部署申请和进度查询，不会自动创建游戏、托管静态文件或直接发布服务。游戏代码不需要也不包含部署凭证。
+仓库包含依据 Awesome Deploy 0.11.8 平台 `examples/simple-web` 编写的 `awesome.yaml`、`Dockerfile` 和 `/healthz` 服务。`stgreen` 是清单中的候选子域名，实际可用性须由平台受理时确认。容器只复制游戏页面和服务器文件；本地验证可运行 `PORT=8080 python3 server.py`。
 
-若要用 Awesome Deploy 正式上线，需要先将本项目放入平台支持的 Git 仓库，并由平台方提供匹配该仓库的服务模板和 `awesome.yaml` 规范；还需要一个已验证实际用户身份的调用方后端、同 App ID 与租户约定、受控的适配服务地址与凭证。后端按 skill 的流程获取用户会话、让用户明确选择或新建目标应用、持久化固定请求 ID 后提交，并查询终态。当前仓库没有这些生产条件，因此没有提交真实部署申请，也没有猜测 `awesome.yaml` 的格式。
+用户提供的 skill 用于**已有可信后端**的登录态共享、权限内应用搜索、幂等部署申请与进度查询。真实提交部署还需要经验证的用户身份、同 App ID 与租户约定、受控的适配服务地址和凭证，以及用户明确指定目标应用或新建应用。浏览器和仓库均不保存这些凭证。当前只完成仓库的部署准备，尚未提交真实部署申请。

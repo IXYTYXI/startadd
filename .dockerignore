@@ -1,0 +1,7 @@
+.git
+*.zip
+*.test.mjs
+test_server.py
+README.md
+node_modules
+__pycache__
