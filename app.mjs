@@ -7,7 +7,9 @@ import {
 const storageKey = 'stellar-greenhouse-v1';
 const $ = selector => document.querySelector(selector);
 const numberFormat = new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 1 });
-const format = value => numberFormat.format(value);
+const compactFormat = new Intl.NumberFormat('zh-CN', { notation: 'compact', maximumFractionDigits: 1 });
+const format = value => value >= 10000 ? compactFormat.format(value) : numberFormat.format(value);
+const formatExact = value => numberFormat.format(value);
 let state;
 let mode = '1';
 let toastTimer;
@@ -32,10 +34,10 @@ function initializeCards() {
   $('#generator-list').innerHTML = GENERATORS.map(item => `
     <article class="generator-card" data-id="${item.id}">
       <div class="generator-main"><div class="generator-icon" aria-hidden="true">${icon(item.id)}</div><div class="generator-info"><h3>${item.name}</h3><p>${item.description}</p></div><span class="generator-owned" aria-label="已有数量">0</span></div>
-      <div class="generator-footer"><span class="generator-production">每个 <strong>+${format(item.output)}</strong> / 秒</span><button class="generator-buy" data-buy="${item.id}" type="button"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 2v12M2 8h12"/></svg><span>购买</span></button></div>
+      <div class="generator-footer"><span class="generator-production">每个 <strong>+${formatExact(item.output)}</strong> / 秒</span><button class="generator-buy" data-buy="${item.id}" type="button"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 2v12M2 8h12"/></svg><span>购买</span></button></div>
     </article>`).join('');
   $('#upgrade-list').innerHTML = UPGRADES.map(item => `
-    <article class="upgrade-card" data-upgrade-card="${item.id}"><div class="upgrade-top"><div class="upgrade-icon" aria-hidden="true">${icon(item.id)}</div><div><h3>${item.name}</h3><p>${item.description}</p></div></div><button data-upgrade="${item.id}" type="button">${format(item.cost)} 星光 · 解锁</button></article>`).join('');
+    <article class="upgrade-card" data-upgrade-card="${item.id}"><div class="upgrade-top"><div class="upgrade-icon" aria-hidden="true">${icon(item.id)}</div><div><h3>${item.name}</h3><p>${item.description}</p></div></div><button data-upgrade="${item.id}" type="button">${formatExact(item.cost)} 星光 · 解锁</button></article>`).join('');
 }
 
 function save() {
@@ -61,7 +63,7 @@ function showToast(message) {
 
 function render() {
   const stats = getStats(state);
-  const lightText = format(state.light);
+  const lightText = formatExact(state.light);
   $('#light-count').textContent = lightText;
   $('.light-total').dataset.size = lightText.length > 14 ? 'long' : lightText.length > 9 ? 'medium' : 'normal';
   $('#rate-value').textContent = format(stats.perSecond);
@@ -100,8 +102,8 @@ function render() {
     const owned = state.upgrades[item.id];
     card.classList.toggle('is-owned', owned);
     button.disabled = owned || state.light < item.cost;
-    button.textContent = owned ? '已解锁' : `${format(item.cost)} 星光 · 解锁`;
-    button.setAttribute('aria-label', `${item.name}，${owned ? '已解锁' : `需要 ${format(item.cost)} 星光`}`);
+    button.textContent = owned ? '已解锁' : `${formatExact(item.cost)} 星光 · 解锁`;
+    button.setAttribute('aria-label', `${item.name}，${owned ? '已解锁' : `需要 ${formatExact(item.cost)} 星光`}`);
   }
 }
 
