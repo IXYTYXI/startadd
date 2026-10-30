@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f4ed" />
+    <meta name="description" content="星际温室是一款轻松的增量游戏。采集星光，建造设施，让你的温室持续生长。" />
+    <title>星际温室 · 增量游戏</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./app.mjs"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳转到游戏内容</a>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="./" aria-label="星际温室，返回首页">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="brand-copy"><strong>星际温室</strong><small>STELLAR GREENHOUSE</small></span>
+        </a>
+        <div class="header-actions">
+          <span class="save-indicator"><span class="save-dot" aria-hidden="true"></span><span id="save-status">进度保存在本机</span></span>
+          <button class="icon-button" id="reset-button" type="button" aria-label="重置游戏进度" title="重置游戏进度">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11a9 9 0 1 1 2.6 6.4"/><path d="M3 4v7h7"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main id="main">
+        <div class="intro-row">
+          <div><div class="eyebrow"><span class="eyebrow-line"></span> 你的宇宙，从一束光开始</div><h1>让星光<span>慢慢生长。</span></h1><p>收集能量、建造设施，让一座小小的温室点亮整片星系。</p></div>
+          <div class="chapter-badge" aria-label="第一章：初生星光"><span>CHAPTER 01</span><strong>初生星光</strong></div>
+        </div>
+
+        <div class="game-grid">
+            <section class="hero-card" aria-labelledby="light-heading">
+              <div class="hero-top"><div><span class="section-kicker">当前储存</span><h2 id="light-heading">星光能量</h2></div><span class="hero-top-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4M4.2 4.2 7 7m10 10 2.8 2.8M19.8 4.2 17 7M7 17l-2.8 2.8"/></svg></span></div>
+              <div class="light-total"><span id="light-count" aria-live="off">0</span><span class="unit">星光</span></div>
+              <div class="orb-stage">
+                <div class="orb-orbit orbit-one" aria-hidden="true"></div><div class="orb-orbit orbit-two" aria-hidden="true"></div>
+                <div class="spark spark-one" aria-hidden="true"></div><div class="spark spark-two" aria-hidden="true"></div><div class="spark spark-three" aria-hidden="true"></div>
+                <button class="collect-orb" id="collect-button" type="button" aria-label="采集星光"><span class="orb-shine" aria-hidden="true"></span><span class="orb-symbol" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none"><path d="M50 5c4.7 21.4 13.6 35.3 45 45-31.4 9.7-40.3 23.6-45 45C45.3 73.6 36.4 59.7 5 50 36.4 40.3 45.3 26.4 50 5Z" fill="currentColor"/><circle cx="50" cy="50" r="7" fill="#fff8dc"/></svg></span></button>
+                <div class="orb-shadow" aria-hidden="true"></div>
+              </div>
+              <div class="collect-hint"><strong>点击星核，采集星光</strong><span id="click-value">每次 +1 星光</span></div>
+              <div class="hero-stats"><div><span>每秒产出</span><strong><span id="rate-value">0</span> <small>/ 秒</small></strong></div><div><span>本轮累计</span><strong><span id="run-value">0</span> <small>星光</small></strong></div><div><span>星种加成</span><strong><span id="star-bonus">×1</span></strong></div></div>
+            </section>
+
+            <section class="journey-card" aria-labelledby="journey-heading"><div class="journey-header"><div><span class="section-kicker">成长目标</span><h2 id="journey-heading">下一颗星种</h2></div><div class="journey-meta"><span id="progress-percent">0%</span><span id="progress-goal">0 / 5,000</span></div></div><div class="progress-track" role="progressbar" aria-label="距离获得星种的进度" aria-valuemin="0" aria-valuemax="5000" aria-valuenow="0" id="progress-bar"><span id="progress-fill"></span></div><p>本轮累计 5,000 星光后可重生，获得永久产量加成。</p></section>
+
+            <section class="shop-card" aria-labelledby="shop-heading"><div class="shop-header"><div><span class="section-kicker">自动生产</span><h2 id="shop-heading">建造设施</h2></div><div class="buy-toggle" role="group" aria-label="购买数量"><button class="mode-button is-active" data-mode="1" type="button" aria-pressed="true">×1</button><button class="mode-button" data-mode="10" type="button" aria-pressed="false">×10</button><button class="mode-button" data-mode="max" type="button" aria-pressed="false">最大</button></div></div><p class="shop-subtitle">设施会自动收集星光，离开后也持续工作。</p><div class="generator-list" id="generator-list"></div></section>
+            <section class="upgrades-section" aria-labelledby="upgrade-heading"><div class="section-title"><div><span class="section-kicker">强化研究</span><h2 id="upgrade-heading">升级实验室</h2></div><span class="section-note">一次购买，本轮有效</span></div><div class="upgrade-grid" id="upgrade-list"></div></section>
+            <section class="prestige-card" aria-labelledby="prestige-heading"><div class="prestige-decor" aria-hidden="true"><span></span><span></span><span></span></div><div class="prestige-content"><div class="prestige-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m12 2 2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2Z"/></svg> 星种计划</div><h2 id="prestige-heading">再次出发，<br />点亮更多星系。</h2><p>重置本轮设施与升级，换取永久加成。</p><div class="prestige-stats"><span>现有星种 <strong id="star-count">0</strong></span><span>本次可得 <strong id="prestige-gain">0</strong></span></div><button class="prestige-button" id="prestige-button" type="button" disabled>还需收集星光</button></div></section>
+        </div>
+      </main>
+      <footer class="site-footer"><span>一座温室，一整个宇宙。</span><span>星际温室 · 本地存档</span></footer>
+    </div>
+
+    <dialog id="confirm-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description"><div class="dialog-content"><span class="dialog-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 2 2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2Z"/></svg></span><h2 id="dialog-title"></h2><p id="dialog-description"></p><div class="dialog-actions"><button class="dialog-cancel" id="dialog-cancel" type="button">取消</button><button class="dialog-confirm" id="dialog-confirm" type="button">确认</button></div></div></dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
