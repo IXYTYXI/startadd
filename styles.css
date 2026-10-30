@@ -42,3 +42,18 @@ dialog{border:0;border-radius:20px;padding:0;max-width:min(420px,calc(100vw - 32
 @media(max-width:520px){.page-shell{padding:0 14px}.site-header{height:70px}.brand-mark{width:36px;height:36px;border-radius:11px}.brand-copy strong{font-size:17px}.brand-copy small{font-size:8px}.save-indicator{display:none}.header-actions{gap:0}main{padding-top:29px}.intro-row h1{font-size:34px}.intro-row p{font-size:14px}.eyebrow{font-size:11px}.hero-card{min-height:548px;border-radius:20px;padding:22px 20px 0}.hero-top h2{font-size:19px}.light-total{margin-top:16px}.light-total>span:first-child{font-size:55px}.orb-stage{height:265px;margin-top:-4px}.collect-orb{width:196px;height:196px}.orbit-one{width:285px;height:137px}.orbit-two{width:225px;height:215px}.hero-stats{margin-top:23px;padding:15px 12px 18px;gap:5px}.hero-stats>div+div{padding-left:9px}.hero-stats strong{font-size:19px}.hero-stats small{font-size:10px}.hero-stats span:first-child{font-size:11px}.journey-card{padding:20px}.journey-header h2,.section-title h2,.shop-header h2{font-size:20px}.upgrade-grid{grid-template-columns:1fr}.upgrade-card{min-height:122px;gap:9px}.upgrade-card button{margin-top:0}.shop-card{padding:22px 17px}.shop-header{flex-direction:row;align-items:end}.buy-toggle{margin-top:0}.section-note{max-width:110px;text-align:right}.site-footer{padding-top:30px}}
 @media(max-width:370px){.shop-header{flex-direction:column;align-items:start}.buy-toggle{margin-top:4px}.light-total>span:first-child{font-size:46px}.hero-stats strong{font-size:16px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Keep the full value visible as the game grows, including on narrow screens. */
+.light-total{flex-wrap:wrap;row-gap:4px}
+.light-total #light-count{min-width:0;overflow-wrap:anywhere}
+.light-total[data-size="medium"] #light-count{font-size:clamp(36px,4vw,56px)}
+.light-total[data-size="long"] #light-count{font-size:clamp(25px,3vw,40px)}
+.hero-stats strong,.journey-meta span:last-child,.generator-production,.generator-owned,.generator-buy span,.prestige-stats strong,.prestige-button,.collect-hint span,.toast{overflow-wrap:anywhere}
+.generator-footer,.prestige-stats{flex-wrap:wrap}
+.generator-production{min-width:0}
+.generator-owned{max-width:50%}
+.generator-buy{min-width:0;max-width:100%;height:auto;padding:10px 12px}
+.prestige-button{max-width:100%;height:auto;padding:10px 20px}
+@media(max-width:520px){.light-total[data-size="medium"] #light-count{font-size:40px}.light-total[data-size="long"] #light-count{font-size:27px}}
+@media(max-width:520px){.hero-stats{grid-template-columns:1fr;gap:10px}.hero-stats>div{flex-direction:row;align-items:baseline;justify-content:space-between;gap:8px}.hero-stats>div+div{border-left:0;border-top:1px solid rgba(255,255,255,.13);padding:10px 0 0}.hero-stats strong{text-align:right}}
+@media(max-width:520px){.journey-header{flex-direction:column;align-items:stretch;gap:8px}.journey-meta{width:100%;flex-direction:row;align-items:baseline;justify-content:space-between;gap:10px}.journey-meta span:last-child{text-align:right}}
